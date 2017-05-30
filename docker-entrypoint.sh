@@ -109,7 +109,7 @@ EOF
     sed -i "s|\s*\"defaultdownloadfolder\"\s*:\s*\"\"|\ \ \ \ \ \ \ \ \"defaultdownloadfolder\":\ \"/downloads\"|g" $MYJDPATH/cfg/org.jdownloader.api.myjdownloader.MyJDownloaderSettings.json
   fi
   chown -R "${MYUSER}":"${MYUSER}" "${MYJDPATH}"
-  exec su-exec "${MYUSER}" java -Djava.awt.headless=true -jar "${MYJDPATH}"/JDownloader.jar -norestart
+  exec su -pc "java -Djava.awt.headless=true -jar ${MYJDPATH}/JDownloader.jar -norestart ${MYUSER}"
 else
   exec "$@"
 fi

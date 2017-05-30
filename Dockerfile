@@ -10,8 +10,7 @@ ENV LANG='en_US.UTF-8' \
 ### Install Application
 RUN apk --no-cache upgrade && \
     apk add --no-cache --virtual=run-deps \
-      openjdk8-jre-base \
-      su-exec && \
+      openjdk8-jre-base && \
 	mkdir -p /opt/JDownloader && \
 	wget -O /opt/JDownloader/JDownloader.jar http://installer.jdownloader.org/JDownloader.jar && \
 	java -Djava.awt.headless=true -jar /opt/JDownloader/JDownloader.jar -norestart && \
