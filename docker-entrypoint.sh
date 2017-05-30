@@ -87,7 +87,7 @@ if [ "$1" = 'jdownloader' ]; then
     if [ -n $DOCKJDMAIL ]; then
       sed -i "s|\s*\"email\"\s*:\s*\"\"|\ \ \ \ \ \ \ \ \"email\":\ \"${DOCKJDMAIL}\"|g" $MYJDPATH/cfg/org.jdownloader.api.myjdownloader.MyJDownloaderSettings.json
 	else
-	  logger "ERROR: DOCKJDPASSWD is not defined, instance will be not manageable"
+	  logger "ERROR: DOCKJDMAIL is not defined, instance will be not manageable"
 	fi
     if [ -n $DOCKJDNAME ]; then
 	  sed -i "s|\s*\"devicename\"\s*:\s*\"\"|\ \ \ \ \ \ \ \ \"devicename\":\ \"${DOCKJDNAME}\"|g" $MYJDPATH/cfg/org.jdownloader.api.myjdownloader.MyJDownloaderSettings.json
