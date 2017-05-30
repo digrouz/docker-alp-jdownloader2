@@ -98,7 +98,7 @@ if [ "$1" = 'jdownloader' ]; then
 {
   "autoconnectenabledv2" : true,
   "email" : "${DOCKJDMAIL}",
-  "password" : "${DOCKJDPASSWD}",
+  "password" : "${DOCKJDPASSWD}"
 }
 EOF
       /bin/chown -R "${MYUSER}":"${MYUSER}" $MYJDPATH/cfg/org.jdownloader.api.myjdownloader.MyJDownloaderSettings.json
