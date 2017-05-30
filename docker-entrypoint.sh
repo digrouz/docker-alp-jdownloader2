@@ -3,6 +3,7 @@
 MYUSER="jdownloader"
 MYGID="10018"
 MYUID="10018"
+MYJDPATH="/opt/JDownloader"
 OS=""
 
 DectectOS(){
@@ -77,8 +78,38 @@ AutoUpgrade
 ConfigureUser
 
 if [ "$1" = 'jdownloader' ]; then
-  chown -R "${MYUSER}":"${MYUSER}" /opt/JDownloader
-  exec su-exec "${MYUSER}" java -Djava.awt.headless=true -jar /opt/JDownloader/JDownloader.jar -norestart
+  if [ -f $MYJDPATH/cfg/org.jdownloader.api.myjdownloader.MyJDownloaderSettings.json ]; then
+    if [ -n $DOCKJDPASSWD ]; then
+      sed -i "s|\s*\"password\"\s*:\s*\"\"|\ \ \ \ \ \ \ \ \"password\":\ \"${DOCKJDPASSWD}\"|g" $MYJDPATH/cfg/org.jdownloader.api.myjdownloader.MyJDownloaderSettings.json
+	else
+	  logger "ERROR: DOCKJDPASSWD is not defined, instance will be not manageable"
+	fi
+    if [ -n $DOCKJDMAIL ]; then
+      sed -i "s|\s*\"email\"\s*:\s*\"\"|\ \ \ \ \ \ \ \ \"email\":\ \"${DOCKJDMAIL}\"|g" $MYJDPATH/cfg/org.jdownloader.api.myjdownloader.MyJDownloaderSettings.json
+	else
+	  logger "ERROR: DOCKJDPASSWD is not defined, instance will be not manageable"
+	fi
+    if [ -n $DOCKJDNAME ]; then
+	  sed -i "s|\s*\"devicename\"\s*:\s*\"\"|\ \ \ \ \ \ \ \ \"devicename\":\ \"${DOCKJDNAME}\"|g" $MYJDPATH/cfg/org.jdownloader.api.myjdownloader.MyJDownloaderSettings.json
+	fi
+  else
+    if [ ! -f $MYJDPATH/cfg/org.jdownloader.api.myjdownloader.MyJDownloaderSettings.json ]; then
+      cat << EOF > $MYJDPATH/cfg/org.jdownloader.api.myjdownloader.MyJDownloaderSettings.json
+{
+  "autoconnectenabledv2" : true,
+  "email" : "${DOCKJDMAIL}",
+  "password" : "${DOCKJDPASSWD}",
+}
+EOF
+      /bin/chown -R "${MYUSER}":"${MYUSER}" $MYJDPATH/cfg/org.jdownloader.api.myjdownloader.MyJDownloaderSettings.json
+      /bin/chmod 0664 $MYJDPATH/cfg/org.jdownloader.api.myjdownloader.MyJDownloaderSettings.json
+    fi
+  fi
+  if [ -f $MYJDPATH/cfg/org.jdownloader.settings.GeneralSettings.json ]; then
+    sed -i "s|\s*\"defaultdownloadfolder\"\s*:\s*\"\"|\ \ \ \ \ \ \ \ \"defaultdownloadfolder\":\ \"/downloads\"|g" $MYJDPATH/cfg/org.jdownloader.api.myjdownloader.MyJDownloaderSettings.json
+  fi
+  chown -R "${MYUSER}":"${MYUSER}" "${MYJDPATH}"
+  exec su-exec "${MYUSER}" java -Djava.awt.headless=true -jar "${MYJDPATH}"/JDownloader.jar -norestart
 else
   exec "$@"
 fi
