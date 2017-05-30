@@ -21,7 +21,7 @@ RUN apk --no-cache upgrade && \
 
 
 ### Volume
-VOLUME ["/opt/JDownloader/cfg","/config"]
+VOLUME ["/opt/JDownloader/cfg","/downloads"]
 
 ### Expose ports
 #EXPOSE 
