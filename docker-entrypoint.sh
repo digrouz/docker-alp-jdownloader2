@@ -106,7 +106,7 @@ EOF
     fi
   fi
   if [ -f $MYJDPATH/cfg/org.jdownloader.settings.GeneralSettings.json ]; then
-    sed -i "s|\s*\"defaultdownloadfolder\"\s*:\s*\"\"|\ \ \ \ \ \ \ \ \"defaultdownloadfolder\":\ \"/downloads\"|g" $MYJDPATH/cfg/org.jdownloader.api.myjdownloader.MyJDownloaderSettings.json
+    sed -i "s|\s*\"defaultdownloadfolder\"\s*:\s*\"\"|\ \ \ \ \ \ \ \ \"defaultdownloadfolder\":\ \"/downloads\"|g" $MYJDPATH/cfg/org.jdownloader.settings.GeneralSettings.json
   fi
   chown -R "${MYUSER}":"${MYUSER}" "${MYJDPATH}"
   exec su-exec "${MYUSER}" java -Djava.awt.headless=true -jar "${MYJDPATH}"/JDownloader.jar -norestart
