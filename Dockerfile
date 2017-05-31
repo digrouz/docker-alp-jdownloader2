@@ -11,6 +11,7 @@ ENV LANG='en_US.UTF-8' \
 RUN apk --no-cache upgrade && \
     apk add --no-cache --virtual=run-deps \
       openjdk8-jre-base \
+      ffmpeg \
       su-exec && \
 	mkdir -p /opt/JDownloader && \
 	wget -O /opt/JDownloader/JDownloader.jar http://installer.jdownloader.org/JDownloader.jar && \
